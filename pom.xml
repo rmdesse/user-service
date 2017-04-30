@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.home</groupId>
+	<artifactId>user</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>userService</name>
+	<description>Provides Services for User Entity</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.3.6.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+	
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-security</artifactId>
+		</dependency>
+		
+		<!-- mongo db -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+
+		<!-- redis - https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-redis -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-redis</artifactId>	
+		</dependency>
+
+		
+		 <dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-starter-actuator</artifactId>
+    	</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
+		<dependency>
+		    <groupId>commons-validator</groupId>
+		    <artifactId>commons-validator</artifactId>
+		    <version>1.4.0</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
+		<dependency>
+		    <groupId>commons-lang</groupId>
+		    <artifactId>commons-lang</artifactId>
+		    <version>2.3</version>
+		</dependency>
+		
+		<dependency>
+     		<groupId>com.jayway.jsonpath</groupId>
+    		<artifactId>json-path</artifactId>
+    		<scope>test</scope>
+		</dependency>
+		
+		
+		<!-- Swagger for Rest API pages (documentation) -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.6.1</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.6.1</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.10</version>
+		</dependency>
+		
+		<!-- Testing -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<!--  mongo db for testing -->
+		<dependency>
+		    <groupId>de.flapdoodle.embed</groupId>
+		    <artifactId>de.flapdoodle.embed.mongo</artifactId>
+		    <version>1.50.5</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		<!-- embedded REDIS for testing -->
+		<dependency>
+		  <groupId>com.github.kstyrc</groupId>
+		  <artifactId>embedded-redis</artifactId>
+		  <version>0.6</version>
+		</dependency>
+		
+		
+		<!--  docker maven plugin -->
+		<dependency>
+		    <groupId>com.spotify</groupId>
+		    <artifactId>docker-maven-plugin</artifactId>
+		    <version>0.4.11</version>
+		</dependency>
+		
+		<!-- only for DEV -->
+		
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-devtools</artifactId>
+	        <optional>true</optional>
+	    </dependency>
+
+		
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Brixton.SR3</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
+			
+			<plugin>
+			    <groupId>com.spotify</groupId>
+			    <artifactId>docker-maven-plugin</artifactId>
+			    <version>0.3.8</version>
+			    <configuration>
+			        <imageName>microservice/${project.artifactId}</imageName>
+			        <dockerDirectory>src/main/docker</dockerDirectory>
+			        <resources>
+			            <resource>
+			                <targetPath>/</targetPath>
+			                <directory>${project.build.directory}</directory>
+			                <include>${project.build.finalName}.jar</include>
+			            </resource>
+			        </resources>
+			    </configuration>
+			</plugin>
+	
+		</plugins>
+	</build>
+
+
+</project>
